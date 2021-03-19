@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+</head>
+
+<body>
+    {% if ref %}
+    <div>
+    <h1>The following is the budgetary information for the referee in the competition</h1>
+    
+    <table>
+            <tr>
+                <th>Referee</th>
+                <th>Total pay for competition</th>
+            </tr>
+            {% for refInfo in ref %}
+            <tr>
+                <td>{{refInfo[0]}}</td>
+                <td>{{refInfo[1]}}</td>
+            </tr>
+            {% endfor %}        
+    </table>
+
+    
+    </div>
+    {% endif %}
+    
+
+    {% if bro %}
+    <div>
+    <h1>The following is the budgetary information for the broadcasters in the competition</h1>
+    <table>
+            <tr>
+                <th>Broadcaster</th>
+                <th>Region</th>
+                <th>Contract Value</th>
+            </tr>
+            {% for broInfo in bro %}
+            <tr>
+                <td>{{broInfo[0]}}</td>
+                <td>{{broInfo[1]}}</td>
+                <td>{{broInfo[2]}}</td>
+            </tr>
+            {% endfor %}
+    </table>
+    </div>
+    {% endif %}
+</body>
+</html>
+
+
+
+
+

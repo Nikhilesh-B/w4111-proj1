@@ -119,6 +119,27 @@ def getTeamId(country):
      cursor.close()
      return tid[0]
     
+def getRefInfo():
+    cursor = g.conn.execute("""SELECT name , SUM(ref_pay) as total
+                               FROM  referee NATURAL JOIN officiates
+                               GROUP BY name """)
+    ref = []
+    for result in cursor:
+        ref.append(result)
+    cursor.close()
+    return ref
+
+
+def getBroInfo():
+    cursor = g.conn.execute("""SELECT broadcaster_name as name, region_broadcast as region, SUM(broadcasting_fee) as total
+                               FROM   tvbroadcasters NATURAL JOIN broadcasts
+                               GROUP BY broadcaster_name, region_broadcast""")
+    bro = []
+    for result in cursor:
+        bro.append(result)
+    cursor.close()
+    return bro
+
 
 def extractSponsorInfo(tid):
     cursor = g.conn.execute("""SELECT s.name, s.industry, a.deal_value
@@ -153,13 +174,21 @@ def sponsors():
         return render_template("sponsors.html",context=context,country=country)
 
 
+
+
+@app.route('/budget', methods = ['GET'])
+def budget():
+    if request.method == 'GET':
+        bro = getBroInfo()
+        ref = getRefInfo()
+        return render_template("budget.html",ref=ref,bro=bro)
+
+
+
 @app.route('/')
 def index():
 
   print(request.args)
-
-
-  
   cursor = g.conn.execute("SELECT name FROM test")
   names = []
   for result in cursor:
