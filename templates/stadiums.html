@@ -24,8 +24,8 @@
     </div>
     <p><input type=submit value=Next></p>
     </form>
-    {% if context%}
     <div>
+    {% if context%}
     <h2>Games played in selected Arena: </h2>
     <table>
     <tr>
@@ -37,8 +37,8 @@
         <th>Team 2 captain</th>
         <th>Score</th>
     </tr>
-        {% for stadInfo in context %}
-        <TR>
+    {% for stadInfo in context %}
+     <TR>
             <TD>{{stadInfo[0]}}</TD>
             <TD>{{stadInfo[1]}}</TD>
             <TD>{{stadInfo[2]}}</TD>
@@ -46,11 +46,11 @@
             <TD>{{stadInfo[4]}}</TD>
             <TD>{{stadInfo[5]}}</TD>
             <TD>{{stadInfo[6]}}</TD>
-        </TR>
-        {% endfor %}
+    </TR>
+    {% endfor %}
     </table>
-    </div>
     {% endif %}
+    </div>
 </body>
 </html>
 
