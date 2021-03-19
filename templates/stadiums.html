@@ -24,7 +24,8 @@
     </div>
     <p><input type=submit value=Next></p>
     </form>
-    {% if context != None %}
+    {% if context%}
+    <div>
     <h2>Games played in selected Arena: </h2>
     <table>
     <tr>
@@ -48,6 +49,7 @@
         </TR>
         {% endfor %}
     </table>
+    </div>
     {% endif %}
 </body>
 </html>
