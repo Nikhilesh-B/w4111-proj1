@@ -97,7 +97,7 @@ def teardown_request(exception):
 def extractStadInfo(stadium):
     cursor = g.conn.execute("""SELECT T1.country,T1.manager_name,T1.captain, T2.country, T2.manager_name, T2.captain, M.score 
                             FROM match M, teams T1, teams T2, playsin P 
-                            WHERE P.team_id=T1.team_id, P.team2_id = T2.team_id and P.stadium =(?)""",stadium)
+                            WHERE P.team_id=T1.team_id AND P.team2_id = T2.team_id AND P.stadium =(?)""",stadium)
     stadium_info = []
     for result in cursor:
         stadium_info.append(result)
