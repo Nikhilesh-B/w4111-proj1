@@ -1,0 +1,54 @@
+<!doctype html>
+
+
+<html lang="en">
+
+<head>
+</head>
+
+
+
+<body>
+    <form name="myForm" action="" method="post" onsubmit="">
+    <div><p> Select a country for sponsorships</p></div>
+    {%if countires != None%}
+    <div>
+            
+            <input type="radio" name="options" id="option1" value = "Klingrad Stadium"> Klingrad Stadium </input><br>
+            <input type="radio" name="options" id="option2" value = "Kazan Arena">Kazan Arena</input><br>
+            <input type="radio" name="options" id="option3" value = "Samara Arena">Samara Arena</input><br>
+            <input type="radio" name="options" id="option4" value = "Rostov Arena"> Rostov Arena </input><br>
+            <input type="radio" name="options" id="option5" value = "Saint Petersburg Stadium"> Saint Petersburg Stadium </input><br>
+            <input type="radio" name="options" id="option6" value = "Luzhinki Stadium"> Luzhinki Stadium </input><br>
+            <input type="radio" name="options" id="option7" value = "Fisht Stadium "> Fisht Stadium  </input><br>
+    </div>
+    <p><input type=submit value=Next></p>
+    </form>
+    {% if context != None %}
+    <h2>Games played in selected Arena: </h2>
+    <table>
+    <tr>
+        <th>Team 1</th>
+        <th>Team 1 manager</th>
+        <th>Team 1 captain</th>
+        <th>Team 2</th>
+        <th>Team 2 manager</th>
+        <th>Team 2 captain</th>
+        <th>Score</th>
+    </tr>
+        {% for stadInfo in context %}
+        <TR>
+            <TD>{{stadInfo[0]}}</TD>
+            <TD>{{stadInfo[1]}}</TD>
+            <TD>{{stadInfo[2]}}</TD>
+            <TD>{{stadInfo[3]}}</TD>
+            <TD>{{stadInfo[4]}}</TD>
+            <TD>{{stadInfo[5]}}</TD>
+            <TD>{{stadInfo[6]}}</TD>
+        </TR>
+        {% endfor %}
+    </table>
+    {% endif %}
+</body>
+</html>
+
