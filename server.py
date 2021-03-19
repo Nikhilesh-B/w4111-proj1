@@ -111,11 +111,6 @@ def extractStadInfo(stadium):
 
 
 
-
-
-
-
-
 @app.route('/')
 def index():
 
@@ -137,9 +132,9 @@ def index():
 
 
 
-@app.route('/stadiums', methods=['GET','POST']):
+@app.route('/stadiums', methods=['GET','POST'])
 def stadiums():
-    if flask.request.method == 'GET':
+    if request.method == 'GET':
         render_template("stadiums.html")
     else:
         stadium = request.form['options']
