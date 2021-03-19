@@ -3,8 +3,7 @@
 Columbia's COMS W4111.001 Introduction to Databases
 Example Webserver
 To run locally:
-    python server.py
-Go to http://localhost:8111 in your browser.
+    python server.py Go to http://localhost:8111 in your browser.
 A debugger such as "pdb" may be helpful for debugging.
 Read about it online.
 """
@@ -135,12 +134,12 @@ def index():
 @app.route('/stadiums', methods=['GET','POST'])
 def stadiums():
     if request.method == 'GET':
-        render_template("stadiums.html")
+       return render_template("stadiums.html")
     else:
         stadium = request.form['options']
         stadium_info = extractStadInfo(stadium)
         context = stadium_info
-        render_template("stadiums.html",**context)
+        return render_template("stadiums.html",**context)
 
 
 
