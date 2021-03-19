@@ -1,0 +1,47 @@
+<!doctype html>
+
+
+<html lang="en">
+
+<head>
+</head>
+
+<body>
+    {% if countries %}
+    <form name="myForm" action="" method="post" onsubmit="">
+    <div><p> Select a country from the list to view their sponsorships!</p></div>
+    <div>
+            {% for country in countries %}
+            <input type="radio" name="options" id="option1" value = country>country</input><br/>
+            {% endfor %}
+    </div>
+    <p><input type=submit value=Next></p>
+    </form>
+    {% endif %}
+
+    {% if context %}
+    <div>
+        <h2>Sponsors for {{country}}: </h2>
+            <table>
+            <tr>
+                <th>Name</th>
+                <th>Industry</th>
+                <th>Deal Value ($)</th>
+            </tr>
+            
+        {% for sponsorInfo in context %}
+        <TR>
+            <TD>{{sponsorInfo[0]}}</TD>
+            <TD>{{sponsorInfo[1]}}</TD>
+            <TD>{{sponsorInfo[2]}}</TD>
+        </TR>
+        {% endfor %}
+    </div>
+    {% endif %}
+</body>
+</html>
+
+
+
+
+
