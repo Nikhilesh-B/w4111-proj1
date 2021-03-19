@@ -12,7 +12,7 @@
     <div><p> Select a country from the list to view their sponsorships!</p></div>
     <div>
             {% for country in countries %}
-            <input type="radio" name="options" id="option1" value = country>country</input><br/>
+	    <input type="radio" name="options" id="option1" value = {{country}}>{{country}}</input><br/>
             {% endfor %}
     </div>
     <p><input type=submit value=Next></p>
