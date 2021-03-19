@@ -10,17 +10,15 @@
 
 <body>
     <form name="myForm" action="" method="post" onsubmit="">
-    <div><p> Select a country for sponsorships</p></div>
-    {%if countires != None%}
     <div>
             
-            <input type="radio" name="options" id="option1" value = "Klingrad Stadium"> Klingrad Stadium </input><br>
-            <input type="radio" name="options" id="option2" value = "Kazan Arena">Kazan Arena</input><br>
-            <input type="radio" name="options" id="option3" value = "Samara Arena">Samara Arena</input><br>
-            <input type="radio" name="options" id="option4" value = "Rostov Arena"> Rostov Arena </input><br>
-            <input type="radio" name="options" id="option5" value = "Saint Petersburg Stadium"> Saint Petersburg Stadium </input><br>
-            <input type="radio" name="options" id="option6" value = "Luzhinki Stadium"> Luzhinki Stadium </input><br>
-            <input type="radio" name="options" id="option7" value = "Fisht Stadium "> Fisht Stadium  </input><br>
+            <input type="radio" name="options" id="option1" value = "Klingrad Stadium"> Klingrad Stadium </input><br/>
+            <input type="radio" name="options" id="option2" value = "Kazan Arena">Kazan Arena</input><br/>
+            <input type="radio" name="options" id="option3" value = "Samara Arena">Samara Arena</input><br/>
+            <input type="radio" name="options" id="option4" value = "Rostov Arena"> Rostov Arena </input><br/>
+            <input type="radio" name="options" id="option5" value = "Saint Petersburg Stadium"> Saint Petersburg Stadium </input><br/>
+            <input type="radio" name="options" id="option6" value = "Luzhinki Stadium"> Luzhinki Stadium </input><br/>
+            <input type="radio" name="options" id="option7" value = "Fisht Stadium "> Fisht Stadium  </input><br/>
     </div>
     <p><input type=submit value=Next></p>
     </form>
@@ -49,7 +47,7 @@
            	 <TD>{{stadInfo[6]}}</TD>
     	</TR>
     	{% endfor %}
-    	</table>
+    </table>
     </div>
     {% endif %}
 </body>
