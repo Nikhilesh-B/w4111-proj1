@@ -107,7 +107,50 @@ def extractStadInfo(stadium):
 
 
 
+def getTeamId(country):
+     cursor = g.conn.execute("""SELECT team_id
+                                FROM teams
+                                WHERE country = '{}'
+                            """,country)
+     tid = []
+     for result in cursor:
+         country.append(result)
+     
+     cursor.close()
+     return tid[0]
+    
 
+def extractSponsorInfo(tid):
+    cursor = g.conn.execute("""SELECT s.name, s.industry, a.deal_value
+                                FROM sponsor s, sponsorship_deal a
+                                WHERE a.team_id='{}', a.sponsor_id=s.sponsor_id""",tid)
+    sponsor_info = []
+    for result in cursor:
+        sponsor_info.append(result)
+    cursor.close()
+    return sponsor_info
+
+
+def getCountries():
+    cursor = g.conn.execute("""SELECT country from teams""")
+    countries = []
+    for result in cursor:
+        countries.append(result)
+    cursor.close()
+    return countries
+
+
+@app.route('/sponsors', methods=['GET','POST'])
+def sponsors():
+    if request.method == 'GET':
+        countries =  getCountries()
+        render_template("sponsors.html",countries)
+    else:
+        country = request.form['options']
+        tid = getTeamId(country)
+        sponsor_info = extractSponsorInfo(tid)
+        context = sponsor_info
+        render_template("sponsors.html",context=context,country=country)
 
 
 @app.route('/')
