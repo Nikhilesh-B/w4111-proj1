@@ -1,0 +1,89 @@
+<!doctype html>
+
+
+<html lang="en">
+
+<head>
+</head>
+
+<body>
+   {% if team %}
+    <form name="myForm" action="" method="post" onsubmit="">
+    <div><p> Select a nation from the list to view their players!</p></div>
+    <div>
+            {% for country in team %}
+            <input type="radio" name="nation" id="option1" value = {{country}}>country{{[1]}}</input><br/>
+            {% endfor %}
+    </div>
+    <p><input type=submit value=Next></p>
+    </form>
+    {% endif %}
+    
+    
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    
+    {% if players and country %}
+    <form name="myForm" action="" method="post" onsubmit="">
+    <div><p> Select a player from {{country}} to view their statistics and equipment!</p></div>
+    <div>
+            {% for player in players %}
+            <input type="radio" name="player" id="option1" value = {{player}}>{{player[1]}}</input><br/>
+            {% endfor %}
+    </div>
+    <p><input type=submit value=Next></p>
+    </form>
+    {% endif %}
+    
+    
+    
+    {$ if equip and playerName %}
+    <div>
+    <p>Below is all the equipment the staff must provide to {{playerName}}</p>
+    <table>
+            <tr>
+                <th>Category</th>
+                <th>Brand</th>
+            </tr>
+            {% for e in equip %}
+            <tr>
+                <td>{{e[0]}}</td>
+                <td>{{e[1]}}</td>
+            </tr>
+            {% endfor %}        
+    </table>
+    
+    </div>
+    {% endif %}
+   
+   
+    {$ if stat and playerName %}
+    <div>
+    <p>Below are all the statistics for {{playerName}}</p>
+    <table>
+            <tr>
+                <th>Position</th>
+                <th>Height(cm)</th>
+                <th>Weight(lbs)</th>
+                <th>Preferred foot</th>
+            </tr>
+            <tr>
+                <td>{{stat[0]}}</td>
+                <td>{{stat[1]}}</td>
+                <td>{{stat[2]}}</td>
+                <td>{{stat[3]}}</td>
+           </tr>     
+    </table>
+    
+    </div>
+    {% endif %}
+   
+</body>
+</html>
+
+
+

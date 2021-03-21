@@ -1,0 +1,56 @@
+<!doctype html>
+
+
+<html lang="en">
+
+<head>
+</head>
+
+<body>
+    {% if team %}
+    <form name="myForm" action="" method="post" onsubmit="">
+    <div><p> Select a nation from the list to view their schedule</p></div>
+    <div>
+            {% for country in team %}
+            <input type="radio" name="nation" id="option1" value = {{country}}>country{{[1]}}</input><br/>
+            {% endfor %}
+    </div>
+    <p><input type=submit value=Next></p>
+    </form>
+    {% endif %}
+    
+    
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    
+ 
+    {$ if schdule %}
+    <div>
+    <p>Below is the schedule for {{country}}</p>
+    <table>
+            <tr>
+                <th>Time and date</th>
+                <th>Stadium</th>
+                <th>Opponent</th>
+            </tr>
+            {% for match in schedule%}
+            <tr>
+                <td>{{match[0]}}</td>
+                <td>{{match[1]}}</td>
+                <td>{{match[2]}}</td>
+            </tr>
+            {% endfor %}
+    </table>
+    
+    </div>
+    {% endif %}
+   
+</body>
+</html>
+
+
+
