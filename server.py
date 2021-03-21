@@ -93,7 +93,6 @@ def teardown_request(exception):
 
 
 
-
 def extractStadInfo(stadium):
     cursor = g.conn.execute("""SELECT T1.country,T1.manager_name,T1.captain, T2.country, T2.manager_name, T2.captain, M.score 
                             FROM match M, teams T1, teams T2, playsin P 
@@ -103,8 +102,6 @@ def extractStadInfo(stadium):
         stadium_info.append(result)
     cursor.close()
     return stadium_info
-
-
 
 
 def getTeamId(country):
@@ -128,7 +125,6 @@ def getRefInfo():
         ref.append(result)
     cursor.close()
     return ref
-
 
 def getBroInfo():
     cursor = g.conn.execute("""SELECT broadcaster_name as name, region_broadcast as region, SUM(broadcasting_fee) as total
@@ -159,8 +155,6 @@ def getCountries():
         countries.append(result[0])
     cursor.close()
     return countries
-
-
 
 
 def getAllEquipment(pid):
@@ -226,21 +220,29 @@ def getSchedule(nid):
     return schedule
 
 def getCountryName(nid):
-    cursor = g.conn.execute("""SELECT T.country
-                               FROM teams T  
-                               WHERE T.team_id='{}'""".format(nid))
-
+    cursor = g.conn.execute("""SELECT country
+                            FROM teams
+                            WHERE team_id = '{}'
+                            """.format(nid))
     countries = []
     for result in cursor: 
         countries.append(result)
 
-    return countries[0]
+    cursor.close()
+    return countries
 
 
+def getPlayerName(pid):
+    cursor = g.conn.execute("""SELECT name
+                               FROM player
+                               WHERE player_id = '{}'
+                            """.format(pid))
+    player = []
+    for result in cursor:
+        player.append(result)
 
-
-
-
+    cursor.close()
+    return player
 
 
 @app.route('/player', methods=['GET','POST'])
@@ -248,22 +250,23 @@ def player():
      if request.method == 'GET':
          team = getTeamInfo()
          return render_template("playerInformation.html", team=team)
-
+    
      if request.method == 'POST' and 'nation' in request.form:
          nationID =  request.form['nation']
          country = getCountryName(nationID)[0]
-         players = getAllPlayers(nationID) 
+         players = getAllPlayers(nationID)
          return render_template("playerInformation.html",players=players,country=country)
-    
-    
+
+
+
      if request.method == 'POST' and 'player' in request.form:
-         player =  request.form['player']
-         playerName = player[1]
-         playerID = player[0]
+         playerID =  request.form['player']
+         playerName = getPlayerName(playerID)[0]
          equip = getAllEquipment(playerID)
          stat = getAllStat(playerID)
-         return render_template("playerInformation.html",equip=equip,stat=stat,playerName=playerName)      
-         
+
+         return render_template("playerInformation.html",equip=equip,stat=stat,playerName=playerName)
+    
          
          
          
