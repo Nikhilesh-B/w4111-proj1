@@ -260,7 +260,7 @@ def schedule():
     if request.method == 'POST':
         nationID =  request.form['nation']
         schedule = getSchedule(nationID)
-        country = getCountryName(nationID)
+        country = getCountryName(nationID)[0]
         return render_template("schedule.html",schedule=schedule,country=country)
         
 
