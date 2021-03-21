@@ -158,9 +158,9 @@ def getCountries():
 
 
 def getAllEquipment(pid):
-    cursor = g.conn.execute("""SELECT e.itemtype, e.brand_name
-                               FROM equipment e, has h
-                               WHERE h.player_id='{}'
+    cursor = g.conn.execute("""SELECT itemtype, brand_name
+                               FROM equipment NATURAL JOIN has 
+                               WHERE player_id='{}'
                             """.format(pid))
 
     equipment = []
