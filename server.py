@@ -261,7 +261,7 @@ def player():
 
      if request.method == 'POST' and 'player' in request.form:
          playerID =  request.form['player']
-         playerName = getPlayerName(playerID)[0]
+         playerName = getPlayerName(playerID)[0][0]
          equip = getAllEquipment(playerID)
          stat = getAllStat(playerID)
 
