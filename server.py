@@ -161,6 +161,112 @@ def getCountries():
     return countries
 
 
+
+
+def getAllEquipment(pid):
+    cursor = g.conn.execute("""SELECT e.itemtype, e.brand_name
+                               FROM equipment e, has h
+                               WHERE h.player_id='{}'
+                            """.format(pid))
+
+    equipment = []
+    for result in cursor:
+        equipment.append(result)
+    cursor.close()
+    return equipment
+
+
+
+def getAllStat(pid):
+    cursor = g.conn.execute("""SELECT position, height_cm, weight_lbs, preferred_foot
+                                FROM player
+                                WHERE player_id ='{}'
+                            """.format(pid))
+    stats= []
+    for result in cursor:
+        stats.append(result)
+    cursor.close()
+    return stats
+
+
+def getTeamInfo():
+     cursor = g.conn.execute("""SELECT team_id, country
+                                FROM teams""")
+     country= []
+     for result in cursor:
+         country.append(result)
+
+     cursor.close()
+     return country
+
+
+
+
+def getSchedule(nid):
+    cursor = g.conn.execute("""SELECT M.time, M.stadium, T.country
+                            FROM match M, teams T, playsin P
+                            WHERE (P.team_id='{}' OR P.team2_id = '{}') AND (P.team_id = T.team_id OR P.team2_id = T.team_id) AND T.team_id !='{}' AND P.match_id = M.match_id
+                            ORDER BY M.time ASC"""
+                            .format(nid,nid,nid))
+
+    schedule = []
+    for result in cursor:
+        schedule.append(result)
+    cursor.close()
+    return schedule
+
+def getCountryName(nid):
+    cursor = g.conn.execute("""SELECT T.country
+                               FROM teams T  
+                               WHERE T.team_id='{}'""".format(nid))
+
+    countries = []
+    for result in cursor: 
+        countries.append(result)
+
+    return countries[0]
+
+@app.route('/player', methods=['GET','POST'])
+def player():
+     if request.method == 'GET':
+         team = getTeamInfo()
+         return render_template("playerInformation.html", team=team)
+    
+     if request.method == 'POST' and 'nation' in request.form:
+         nation =  request.form['nation']
+         nationID = nation[0]
+         country = nation[1]
+         players = getAllPlayers(nationID) 
+         return render_template("playerInformation.html",players=players,country=country)
+    
+    
+     if request.method == 'POST' and 'player' in request.form:
+         player =  request.form['player']
+         playerName = player[1]
+         playerID = player[0]
+         equip = getAllEquipment(playerID)
+         stat = getAllStat(playerID)
+         return render_template("playerInformation.html",equip=equip,stat=stat,playerName=playerName)      
+         
+         
+         
+         
+@app.route('/schedule',methods=['GET','POST'])
+def schedule():
+    if request.method == 'GET':
+        team = getTeamInfo()
+        return render_template("schedule.html", team=team)
+         
+    if request.method == 'POST':
+        nationID =  request.form['nation']
+        schedule = getSchedule(nationID)
+        country = getCountryName(nationID)
+        return render_template("schedule.html",schedule=schedule,country=country)
+        
+
+
+
+
 @app.route('/sponsors', methods=['GET','POST'])
 def sponsors():
     if request.method == 'GET':
