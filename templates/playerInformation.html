@@ -41,7 +41,7 @@
     
     
     
-    {$ if equip and playerName %}
+    {% if equip and playerName %}
     <div>
     <p>Below is all the equipment the staff must provide to {{playerName}}</p>
     <table>
@@ -61,7 +61,7 @@
     {% endif %}
    
    
-    {$ if stat and playerName %}
+    {% if stat and playerName %}
     <div>
     <p>Below are all the statistics for {{playerName}}</p>
     <table>

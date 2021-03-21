@@ -226,6 +226,29 @@ def getCountryName(nid):
 
     return countries[0]
 
+
+def getAllPlayers(nation): 
+    cursor = g.conn.execute("""SELECT player_id, name  
+                            FROM player
+                            WHERE team_id = '{}'
+                            """.format(nation))
+    players = []
+    for result in cursor: 
+        players.append(result)
+    cursor.close()
+    return players
+
+def getPlayerName(nid):
+    cursor = g.conn.execute("""SELECT name
+                            FROM player
+                            WHERE nid ='{}'
+                            """.format(nid))
+    players = []
+    for result in cursor:
+        players.append(result)
+    cursor.close()
+    return players
+
 @app.route('/player', methods=['GET','POST'])
 def player():
      if request.method == 'GET':
@@ -233,17 +256,15 @@ def player():
          return render_template("playerInformation.html", team=team)
     
      if request.method == 'POST' and 'nation' in request.form:
-         nation =  request.form['nation']
-         nationID = nation[0]
-         country = nation[1]
+         nationID =  request.form['nation']
+         country = getCountryName(nationID)[0]
          players = getAllPlayers(nationID) 
          return render_template("playerInformation.html",players=players,country=country)
     
     
      if request.method == 'POST' and 'player' in request.form:
-         player =  request.form['player']
-         playerName = player[1]
-         playerID = player[0]
+         playerID =  request.form['player']
+         playerName = getPlayerName(playerID)[0]
          equip = getAllEquipment(playerID)
          stat = getAllStat(playerID)
          return render_template("playerInformation.html",equip=equip,stat=stat,playerName=playerName)      
