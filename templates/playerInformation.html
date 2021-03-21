@@ -12,7 +12,7 @@
     <div><p> Select a nation from the list to view their players!</p></div>
     <div>
             {% for country in team %}
-            <input type="radio" name="nation" id="option1" value = {{country}}>country{{[1]}}</input><br/>
+            <input type="radio" name="nation" id="option1" value = {{country[0]}}>country{{[1]}}</input><br/>
             {% endfor %}
     </div>
     <p><input type=submit value=Next></p>
@@ -32,7 +32,7 @@
     <div><p> Select a player from {{country}} to view their statistics and equipment!</p></div>
     <div>
             {% for player in players %}
-            <input type="radio" name="player" id="option1" value = {{player}}>{{player[1]}}</input><br/>
+            <input type="radio" name="player" id="option1" value = {{player[0]}}>{{player[1]}}</input><br/>
             {% endfor %}
     </div>
     <p><input type=submit value=Next></p>
