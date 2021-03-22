@@ -38,6 +38,12 @@
         {% endfor %}
     </div>
     {% endif %}
+
+
+    {% if not context and get %}
+     <p> {{country}} has no sponsors on record </p>
+    {% endif %}
+
 </body>
 </html>
 
