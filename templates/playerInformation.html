@@ -29,7 +29,7 @@
     
     {% if players and country %}
     <form name="myForm" action="" method="post" onsubmit="">
-    <div><p> Select a player from {{country}} to view their statistics and equipment!</p></div>
+    <div><p> Select a player from {{country[0]}} to view their statistics and equipment!</p></div>
     <div>
             {% for player in players %}
             <input type="radio" name="player" id="option1" value = {{player[0]}}>{{player[1]}}</input><br/>
@@ -39,7 +39,9 @@
     </form>
     {% endif %}
     
-    
+    {% if (not players) and country and p1 %}
+     <p>No players in on record for {{country[0]}}</p>
+    {% endif %}
     
     {% if equip and playerName %}
     <div>
@@ -58,6 +60,10 @@
     </table>
     
     </div>
+    {% endif %}
+
+    {% if (not equip) and playerName and p2 %}
+    <p>No equipment on record for {{playerName}}</p>
     {% endif %}
    
    
@@ -80,6 +86,10 @@
     </table>
     
     </div>
+    {% endif %}
+
+    {% if not stat and playerName and p2 %}
+    <p>No statistics on record for {{playerName}}</p>
     {% endif %}
    
 </body>

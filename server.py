@@ -109,10 +109,12 @@ def getTeamId(country):
                                 FROM teams
                                 WHERE country = '{}'
                             """.format(country))
+     print("Japan:"+country)
      tid = []
      for result in cursor:
          tid.append(result[0])
-     
+    
+     print(tid)
      cursor.close()
      return tid[0]
     
@@ -255,8 +257,8 @@ def player():
          nationID =  request.form['nation']
          country = getCountryName(nationID)[0]
          players = getAllPlayers(nationID)
-         return render_template("playerInformation.html",players=players,country=country)
-
+         p1 = True
+         return render_template("playerInformation.html",p1=p1,players=players,country=country)
 
 
      if request.method == 'POST' and 'player' in request.form:
@@ -264,9 +266,11 @@ def player():
          playerName = getPlayerName(playerID)[0][0]
          equip = getAllEquipment(playerID)
          stat = getAllStat(playerID)
-
-         return render_template("playerInformation.html",equip=equip,stat=stat,playerName=playerName)
-    
+         p2 = True
+         return render_template("playerInformation.html",equip=equip,stat=stat,playerName=playerName,p2=p2)
+       
+     else: 
+         return redirect('/player')
          
          
          
@@ -277,12 +281,15 @@ def schedule():
         return render_template("schedule.html", team=team)
          
     if request.method == 'POST':
-        nationID =  request.form['nation']
-        schedule = getSchedule(nationID)
-        country = getCountryName(nationID)[0]
-        return render_template("schedule.html",schedule=schedule,country=country)
+        if('nation' in request.form):
+            nationID =  request.form['nation']
+            schedule = getSchedule(nationID)
+            country = getCountryName(nationID)[0]
+            post = True
+            return render_template("schedule.html",post=post,schedule=schedule,country=country)
         
-
+        else:
+            return redirect('/schedule')            
 
 
 
@@ -292,12 +299,15 @@ def sponsors():
         countries =  getCountries()
         return  render_template("sponsors.html",countries=countries)
     else:
-        country = request.form['options']
-        tid = getTeamId(country)
-        sponsor_info = extractSponsorInfo(tid)
-        context = sponsor_info
-        return render_template("sponsors.html",context=context,country=country)
-
+        if ('options' in request.form):
+            get = True
+            country = request.form['options']
+            tid = getTeamId(country)
+            sponsor_info = extractSponsorInfo(tid)
+            context = sponsor_info
+            return render_template("sponsors.html",context=context,country=country,get=get)
+        else:
+            return redirect('/sponsors')
 
 
 
@@ -309,57 +319,22 @@ def budget():
         return render_template("budget.html",ref=ref,bro=bro)
 
 
-
-@app.route('/')
-def index():
-
-  print(request.args)
-  cursor = g.conn.execute("SELECT name FROM test")
-  names = []
-  for result in cursor:
-    names.append(result['name'])  # can also be accessed using result[0]
-  cursor.close()
-  
-  context = dict(data = names)
-
-
-  return render_template("index.html", **context)
-
-
-
-
 @app.route('/stadiums', methods=['GET','POST'])
 def stadiums():
     if request.method == 'GET':
        return render_template("stadiums.html")
     else:
-        stadium = request.form['options']
-        stadium_info = extractStadInfo(stadium)
-        context = stadium_info
-        return render_template("stadiums.html",context=context)
-
-
-@app.route('/another')
-def another():
-  return render_template("another.html")
-
-
-@app.route('/add', methods=['POST'])
-def add():
-  name = request.form['name']
-  g.conn.execute('INSERT INTO test(name) VALUES (%s)', name)
-  return redirect('/')
-
-
-@app.route('/login')
-def login():
-    abort(401)
-    this_is_never_executed()
-
+        if('options' in request.form):
+            stadium = request.form['options']
+            stadium_info = extractStadInfo(stadium)
+            context = stadium_info
+            post = True
+            return render_template("stadiums.html",context=context,post=post)
+        else:
+           return redirect('/stadiums')
 
 if __name__ == "__main__":
   import click
-
   @click.command()
   @click.option('--debug', is_flag=True)
   @click.option('--threaded', is_flag=True)
@@ -369,17 +344,18 @@ if __name__ == "__main__":
     """
     This function handles command line parameters.
     Run the server using:
-
         python server.py
-
     Show the help text using:
-
         python server.py --help
-
     """
-
     HOST, PORT = host, port
     print("running on %s:%d" % (HOST, PORT))
     app.run(host=HOST, port=PORT, debug=debug, threaded=threaded)
-
   run()
+      
+
+
+
+
+
+

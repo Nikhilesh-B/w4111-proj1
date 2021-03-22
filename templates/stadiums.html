@@ -50,6 +50,11 @@
     </table>
     </div>
     {% endif %}
+
+   {% if not context and post %}
+    <p>No games played in this arena on record </p>
+   {% endif %}
+
 </body>
 </html>
 

@@ -19,18 +19,9 @@
     </form>
     {% endif %}
     
-    
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    
- 
     {% if schedule %}
     <div>
-    <p>Below is the schedule for {{country}}</p>
+    <p>Below is the schedule for {{country[0]}}</p>
     <table>
             <tr>
                 <th>Time and date</th>
@@ -48,7 +39,11 @@
     
     </div>
     {% endif %}
-   
+  
+   {% if not schedule and post %}
+    <p>There is no associated schedule for this team </p>
+   {% endif %}
+
 </body>
 </html>
 
