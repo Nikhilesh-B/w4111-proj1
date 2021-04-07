@@ -41,19 +41,15 @@ using gin(tsv);
 
 **5. Substantial, meaningful queries involving the new attributes and tables in your schema, with a sentence or two per query explaining what the query is supposed to compute. If one of your three added items is a trigger, then you need to submit two queries (in addition to the trigger information in the previous bullet); otherwise, you need to submit three queries. All your new attributes and tables should appear at least once in one of the queries that you submit. For a text attribute, make sure at least one of your queries uses full-text search, as described here. For an array attribute, make sure at least one of your queries accesses elements in the array. Overall, your queries should work over your PostgreSQL database as submitted. We will run them against your database and part of your grade will be based on them, so please choose your queries carefully. We strongly suggest that you submit well formed queries that run without problems, so please make sure that you have tested your queries by running them on your database exactly as submitted (use copy and paste):**
 
-Bringing up the results for 'neymar'in a commentator's comment
 
-SELECT tsv
-FROM commentator
-WHERE tsv @@ to_tsquery('neymar');
 
-    tsv                                                                                      
- 
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
---------
- 'attent':17 'centr':15 'challeng':27 'close':33 'contribut':3 'garner':7 'given':1 'headlin':10 'layun':30 'miguel':29 'neymar':4 'overreact':24 'posit':9 'reason':21 'stage':34 'wr
-ong':20
-(1 row)
+SELECT name, years_of_exp, stadium, score FROM commentator, match WHERE tsv @@ to_tsquery('goal') and commentator.match_id = match.match_id;
+
+name      | years_of_exp |         stadium          | score
+----------------+--------------+--------------------------+-------
+ roger gonzalez |            8 | Saint Petersburg Stadium | 2-0
+ andrew das     |           12 | Fisht Stadium            | 3-3
+(2 rows)
 
 
 SELECT * from match
@@ -69,7 +65,22 @@ match_id |         stadium          |        time         | bracket |      round
 (5 rows)
 
 
-Bringing up the results for xplayers that were part of the entertainment in the World Cup
+SELECT (entertainment).artist_name, stadium, broadcaster_name FROM match m, broadcasts b, tvbroadcasters t WHERE b.match_id = m.match_id and t.broadcaster_id = b.broadcast
+er_id;
+
+artist_name    |         stadium          | broadcaster_name
+------------------+--------------------------+------------------
+ ronaldo          | Luzhinki Stadium         | BTV
+ ronaldo          | Luzhinki Stadium         | Astro
+ ronaldo          | Luzhinki Stadium         | CTV
+ gianni infantino | Saint Petersburg Stadium | HRT
+ gianni infantino | Saint Petersburg Stadium | ICRT
+ gianni infantino | Saint Petersburg Stadium | TF1
+ robbie williams  | Kazan Arena              | SBS
+ robbie williams  | Kazan Arena              | BBC
+ ronaldo          | Luzhinki Stadium         | SBS
+ gianni infantino | Saint Petersburg Stadium | SBS
+(10 rows)
 
 
 
