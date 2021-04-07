@@ -43,13 +43,21 @@ using gin(tsv);
 
 
 
-SELECT name, years_of_exp, stadium, score FROM commentator, match WHERE tsv @@ to_tsquery('goal') and commentator.match_id = match.match_id;
+SELECT name, years_of_exp, stadium, score, doc FROM commentator, match WHERE tsv @@ to_tsquery('goal') and commentator.match_id = match.match_id;
 
-name      | years_of_exp |         stadium          | score
-----------------+--------------+--------------------------+-------
- roger gonzalez |            8 | Saint Petersburg Stadium | 2-0
- andrew das     |           12 | Fisht Stadium            | 3-3
-(2 rows)
+name      | years_of_exp |         stadium                 | score |            doc                                                                                                            
+ roger gonzalez |            8 | Saint Petersburg Stadium | 2-0   | Sweden eked out a win over Switzerland in an all-European battle at the 2018 FIFA World Cup on Tuesday, advancing 
+to the quarterfinals with a 1-0 scoreline. The Swiss team dominated possession, had more shots (18 to 12), but just could not break through a stingy Swedish defense, as the yellow an
+d blue move on to face either England or Colombia on Saturday.It was a goal by Emil Forsberg in the 66th minute which deflected off a Swiss defender and went in that proved to be the
+ difference in this one..A tough blow for Switzerland, which played well, but could not find a breakthrough against a strong, tall Swedish defense that was compact and shielded its g
+oalkeeper from danger. Sweden once again did not dominate the ball, did not create many chances, but got the job done. There is no doubt the Swedes will be a tough out for either Eng
+land or Colombia in the quarterfinals.
+ 
+ andrew das     |           12 | Fisht Stadium            | 3-3   | But it was the next two goals, the low, hard shots that delivered the World Cup back into French hands, the goals 
+that crowned its latest generation of stars, that confirmed what everyone knew even before its 4-2 victory over Croatia was complete: France was the best team in the field this summe
+r in Russia, a potent mix of greatness, grit and good fortune. And now it can call itself the world champion again.The title is France second, and its first since it won on home soil
+ in 1998, and it ended a thrilling run by Croatia over the past five weeks. The Croats survived three consecutive extra-time games — and two penalty shootouts — in the knockout round
+s to reach their first final, and they even had the better of the game on Sunday. But bad bounces and a better opponent made all the difference.
 
 
 SELECT * from match
@@ -83,6 +91,8 @@ artist_name    |         stadium          | broadcaster_name
 (10 rows)
 
 
+
+**return all matches where a particular artist performed at (along with all of the info)**
 
 
 
