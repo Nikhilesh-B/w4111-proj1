@@ -45,7 +45,7 @@ Bringing up the results for 'neymar'in a commentator's comment
 
 SELECT tsv
 FROM commentator
-WHERE tsv @@ to_tsquery('neymarl');
+WHERE tsv @@ to_tsquery('neymar');
 
     tsv                                                                                      
  
