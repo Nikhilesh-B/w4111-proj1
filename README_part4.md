@@ -17,7 +17,7 @@ Password sql: 277727 <----password for DB
 
 -The following 3 items are the additions to our database: Array attribute, Composite Type, Text attribute which we are to do full-text search. Here is the explanantion for the rationale behind each pne of these modifications to the schema and how they fit within the verall project. Our project is based on the FIFA World Cup with the aim to help the planning of this large event. 
 
-One of the main concerns for the day of the match is always the weather, especially the temperature, wind speed, and humidity. These are 3 crucial pieces of information when considering how to prepare the field for optimal playing conditions. Hence, we added a column in the already existing "match" entity that was of an integer array type holding 3 integers representing the temperature (Fahrenheit), winsd speed (mph), and humidity (percentage) for a specific day of a match. 
+One of the main concerns for the day of the match is always the weather, especially the temperature, wind speed, and humidity. These are 3 crucial pieces of information when considering how to prepare the field for optimal playing conditions. Hence, we added a column in the already existing "match" entity that was of an integer array type holding 3 integers representing the wind speed (mph), temperature, and humidity (percentage) for a specific day of a match. 
 
 Every instance of the FIFA World Cup is filled with all kinds of entertainment that is broadcasted on live television all over the world. We decided to add another column to the "match" entity that had a user-defined attribute called "entertainment_type" which consisted of the following attributes an id, the category of entertainment, the artist name, and the duration for the event. Each row in the entertainment column will related to a particular match.
 
@@ -41,7 +41,35 @@ using gin(tsv);
 
 **5. Substantial, meaningful queries involving the new attributes and tables in your schema, with a sentence or two per query explaining what the query is supposed to compute. If one of your three added items is a trigger, then you need to submit two queries (in addition to the trigger information in the previous bullet); otherwise, you need to submit three queries. All your new attributes and tables should appear at least once in one of the queries that you submit. For a text attribute, make sure at least one of your queries uses full-text search, as described here. For an array attribute, make sure at least one of your queries accesses elements in the array. Overall, your queries should work over your PostgreSQL database as submitted. We will run them against your database and part of your grade will be based on them, so please choose your queries carefully. We strongly suggest that you submit well formed queries that run without problems, so please make sure that you have tested your queries by running them on your database exactly as submitted (use copy and paste):**
 
+Bringing up the results for 'neymar'in a commentator's comment
 
+SELECT tsv
+FROM commentator
+WHERE tsv @@ to_tsquery('neymarl');
+
+    tsv                                                                                      
+ 
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--------
+ 'attent':17 'centr':15 'challeng':27 'close':33 'contribut':3 'garner':7 'given':1 'headlin':10 'layun':30 'miguel':29 'neymar':4 'overreact':24 'posit':9 'reason':21 'stage':34 'wr
+ong':20
+(1 row)
+
+
+SELECT * from match
+WHERE weather[2] > 50;
+
+match_id |         stadium          |        time         | bracket |      round      | score |  weather   |          entertainment
+----------+--------------------------+---------------------+---------+-----------------+-------+------------+---------------------------------
+ a        | Klingrad Stadium         | 2018-06-28 20:00:00 | G       |                 | 1-0   | {7,63,60}  | (a,music,"sam smith",15)
+ f        | Saint Petersburg Stadium | 2018-07-10 21:00:00 |         | Semi-finals     | 1-0   | {16,54,56} | (f,speech,"gianni infantino",5)
+ g        | Saint Petersburg Stadium | 2018-07-14 21:00:00 |         | 3rd Place Match | 2-0   | {12,51,61} | (g,mascot,wolf,3)
+ i        | Fisht Stadium            | 2018-05-15 21:00:00 | B       |                 | 3-3   | {6,54,62}  | (i,xplayer,"iker casillas",5)
+ j        | Luzhinki Stadium         | 2018-06-15 21:00:00 |         | Final           | 4-2   | {9,56,65}  | (j,xplayer,ronaldo,3)
+(5 rows)
+
+
+Bringing up the results for xplayers that were part of the entertainment in the World Cup
 
 
 
