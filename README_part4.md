@@ -42,14 +42,15 @@ USING gin(tsv);
 **5. Substantial, meaningful queries involving the new attributes and tables in your schema, with a sentence or two per query explaining what the query is supposed to compute. If one of your three added items is a trigger, then you need to submit two queries (in addition to the trigger information in the previous bullet); otherwise, you need to submit three queries. All your new attributes and tables should appear at least once in one of the queries that you submit. For a text attribute, make sure at least one of your queries uses full-text search, as described here. For an array attribute, make sure at least one of your queries accesses elements in the array. Overall, your queries should work over your PostgreSQL database as submitted. We will run them against your database and part of your grade will be based on them, so please choose your queries carefully. We strongly suggest that you submit well formed queries that run without problems, so please make sure that you have tested your queries by running them on your database exactly as submitted (use copy and paste):**
 
 
-QUERY 1:
+QUERY 1: 
+
+SELECT name, years_of_exp, stadium, score, doc FROM commentator, match WHERE tsv @@ to_tsquery('goal') and commentator.match_id = match.match_id;
+
 Description: Provide the text in which the lexeme 'goal' appears in a comment made by a commentator at a particular match as well as information about that match and the commentator.
 
 
 
 Results:
-
-SELECT name, years_of_exp, stadium, score, doc FROM commentator, match WHERE tsv @@ to_tsquery('goal') and commentator.match_id = match.match_id;
 
 name      | years_of_exp |         stadium                 | score |            doc                                                                                                            
  roger gonzalez |            8 | Saint Petersburg Stadium | 2-0   | Sweden eked out a win over Switzerland in an all-European battle at the 2018 FIFA World Cup on Tuesday, advancing 
@@ -65,14 +66,14 @@ r in Russia, a potent mix of greatness, grit and good fortune. And now it can ca
  in 1998, and it ended a thrilling run by Croatia over the past five weeks. The Croats survived three consecutive extra-time games — and two penalty shootouts — in the knockout round
 s to reach their first final, and they even had the better of the game on Sunday. But bad bounces and a better opponent made all the difference.
 
-QUERY 2:
-Description: Provide information about a particular performing artist for a match that took place in either Samara Arena or Saint Petersburg Stadium.
-
-Results:
+QUERY 2: 
 
 SELECT (entertainment).artist_name, (entertainment).category,round,score, stadium
 FROM match m 
 WHERE m.stadium = 'Samara Arena' or m.stadium = 'Saint Petersburg Stadium';
+Description: Provide information about a particular performing artist for a match that took place in either Samara Arena or Saint Petersburg Stadium.
+
+Results:
 
 artist_name    | category |      round      | score |         stadium
 ------------------+----------+-----------------+-------+--------------------------
@@ -82,14 +83,14 @@ artist_name    | category |      round      | score |         stadium
 (3 rows)
 
 Query 3:
-Description:
-
-Results: Provide the average wind speed for the knockout round matches that occured in Kazan Arena or Saint Petersburg Stadium.
 
 SELECT AVG((select AVG(a) FROM unnest(wind_speed_mph) AS a)),stadium, time,round,bracket 
 from match 
 WHERE match.stadium = 'Kazan Arena' OR match.stadium = 'Saint Petersburg Stadium' 
 GROUP BY stadium,match.time,match.round,match.bracket;
+Description:
+
+Results: Provide the average wind speed for the knockout round matches that occured in Kazan Arena or Saint Petersburg Stadium.
 
 avg         |         stadium          |        time         |      round      | bracket
 ---------------------+--------------------------+---------------------+-----------------+---------
