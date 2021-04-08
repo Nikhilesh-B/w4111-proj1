@@ -71,6 +71,8 @@ QUERY 2:
 SELECT (entertainment).artist_name, (entertainment).category,round,score, stadium
 FROM match m 
 WHERE m.stadium = 'Samara Arena' or m.stadium = 'Saint Petersburg Stadium';
+
+
 Description: Provide information about a particular performing artist for a match that took place in either Samara Arena or Saint Petersburg Stadium.
 
 Results:
