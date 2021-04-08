@@ -92,7 +92,7 @@ WHERE match.stadium = 'Kazan Arena' OR match.stadium = 'Saint Petersburg Stadium
 GROUP BY stadium,match.time,match.round,match.bracket;
 Description:
 
-Results: Provide the average wind speed for the knockout round matches that occured in Kazan Arena or Saint Petersburg Stadium.
+Results: Provide the average wind speed for the matches that occured in Kazan Arena or Saint Petersburg Stadium.
 
 avg         |         stadium          |        time         |      round      | bracket
 ---------------------+--------------------------+---------------------+-----------------+---------
